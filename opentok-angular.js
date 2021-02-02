@@ -132,6 +132,7 @@ ng.module('opentok', [])
           props.resolution = '320x240';
           props.width = props.width ? props.width : ng.element(element).width();
           props.height = props.height ? props.height : ng.element(element).height();
+          props.publishAudio = false;
           var oldChildren = ng.element(element).children();
           scope.publisher = OT.initPublisher(attrs.apikey || OTSession.session.apiKey,
             element[0], props, function(err) {
