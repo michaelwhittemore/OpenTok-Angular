@@ -130,7 +130,7 @@ ng.module('opentok', [])
         link: function(scope, element, attrs) {
           var props = scope.props() || {};
           props.videoSource = false; // no video
-          props.audioSource = false; // no audio
+          props.publishAudio = false; // no audio, but still need a source
           props.width = props.width ? props.width : ng.element(element).width();
           props.height = props.height ? props.height : ng.element(element).height();
           var oldChildren = ng.element(element).children();
