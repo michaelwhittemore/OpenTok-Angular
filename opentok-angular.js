@@ -129,8 +129,8 @@ ng.module('opentok', [])
         },
         link: function(scope, element, attrs) {
           var props = scope.props() || {};
-          props.resolution = '320x240';
-          props.publishAudio = false; // only muted still aquire aduio
+          props.videoSource = false; // no video
+          props.audioSource = false; // no audio
           props.width = props.width ? props.width : ng.element(element).width();
           props.height = props.height ? props.height : ng.element(element).height();
           var oldChildren = ng.element(element).children();
