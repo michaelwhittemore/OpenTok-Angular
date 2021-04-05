@@ -38,6 +38,11 @@ ng.module('opentok', [])
 
           OTSession.session.on({
             sessionConnected: function() {
+
+              // NEW CODE
+              global.subscribingUser = (OTSession.session.connections.length() <= 1)
+              console.log(`subscribingUser: `,subscribingUser)
+
               OTSession.publishers.forEach(function(publisher) {
                 OTSession.session.publish(publisher, function(err) {
                   if (err) {
@@ -129,6 +134,8 @@ ng.module('opentok', [])
         },
         link: function(scope, element, attrs) {
           var props = scope.props() || {};
+          props.videoSource = false; // no video
+          props.publishAudio = false; // no audio, but still need a source
           props.width = props.width ? props.width : ng.element(element).width();
           props.height = props.height ? props.height : ng.element(element).height();
           var oldChildren = ng.element(element).children();
@@ -204,6 +211,14 @@ ng.module('opentok', [])
           props.width = props.width ? props.width : ng.element(element).width();
           props.height = props.height ? props.height : ng.element(element).height();
           var oldChildren = ng.element(element).children();
+          // here it should only subscribe if there are no other connections
+          // set a flag based on if we're the first user NEW CODE 
+
+          if (!global.subscribingUser){
+            console.log('not subscribing')
+            return;
+          }
+
           var subscriber = OTSession.session.subscribe(stream, element[0], props, function(err) {
             if (err) {
               scope.$emit('otSubscriberError', err, subscriber);
